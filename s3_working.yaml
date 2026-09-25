@@ -1,7 +1,12 @@
-AWSTemplateFormatVersion: 2019-09-09
-Resorces:
+# Description of what this change includes - Version number changed to 2010-09-09. Indentation changed to match AWS YAML. Typoes corrected.
+# Revision number - 1
+# Sept 9, 2025
+
+
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
   S3Bucket:
-    Type: 'AWS:S3:Bucket'
+    Type: 'AWS::S3::Bucket'
     Properties:
       PublicAccessBlockConfiguration:
         BlockPublicAcls: false
@@ -13,23 +18,24 @@ Resorces:
         ErrorDocument: error.html
     DeletionPolicy: Retain
     UpdateReplacePolicy: Retain
-BucketPolicy:
-    #Type: 'AWS::S3::BucketPolicy'
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
     Properties:
-      PolicyDocument:
-        Id: MyPolicy
-        Version: 2012-10-17
-        Statement:
-          - Sid: PublicReadForGetBucketObjects
-            Effect: Allow
-            Principal: '*'
-            Action: 's3:GetObject'
-            Resource: !Join 
+        PolicyDocument:
+          Id: MyPolicy
+          Version: 2012-10-17
+          Statement:
+            - Sid: PublicReadForGetBucketObjects
+              Effect: Allow
+              Principal: '*'
+              Action: 's3:GetObject'
+              Resource: !Join 
               - ''
               - - 'arn:aws:s3:::'
                 - !Ref S3Bucket
                 - /*
-      Bucket: !Ref S3Bucket
+        Bucket: !Ref S3Bucket
+        
 Outputs:
   WebsiteURL:
     Value: !GetAtt 
